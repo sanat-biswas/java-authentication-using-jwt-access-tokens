@@ -1,5 +1,7 @@
 package com.auth.authentication;
 
+import com.auth.authentication.api.brands.model.Brand;
+import com.auth.authentication.api.brands.service.BrandService;
 import com.auth.authentication.domain.Role;
 import com.auth.authentication.domain.User;
 import com.auth.authentication.service.UserService;
@@ -11,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @SpringBootApplication
@@ -47,6 +51,14 @@ public class AuthenticationApplication {
             userService.addRoleToUser("john123", "ROLE_USER");
         };
 
+    }
+
+    @Bean
+    CommandLineRunner runner1(BrandService brandService) {
+        return args -> {
+            brandService.saveBrand(new Brand(null, "Lenovo", LocalDateTime.now(), LocalDateTime.now(), null));
+            brandService.saveBrand(new Brand(null, "Dell", LocalDateTime.now(), LocalDateTime.now(), null));
+        };
     }
 }
 
